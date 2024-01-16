@@ -1,3 +1,7 @@
+# 작성자 : 황성민
+# 작성일자 : 24.01.16
+# 문제 해결, 접근 : https://blog.naver.com/steadydeveloper/223324545064
+
 N = int(input())
 
 arr = [[" "] * N for _ in range(N)]
