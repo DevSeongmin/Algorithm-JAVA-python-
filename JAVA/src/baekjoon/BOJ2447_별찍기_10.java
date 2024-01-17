@@ -9,7 +9,7 @@ import java.util.Scanner;
 작성일자 : 24.01.16
 문제 해결, 접근 : https://blog.naver.com/steadydeveloper/223324545064
  */
-public class Boj2447_별찍기_10 {
+public class BOJ2447_별찍기_10 {
 
     // 별모양을 찍기위한 정적 배열 생성
     static Character[][] arr;

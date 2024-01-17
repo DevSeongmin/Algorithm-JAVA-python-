@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Boj1068_트리 {
+public class BOJ1068_트리 {
 
     static boolean[] visited;
     static ArrayList<ArrayList<Integer>> graph;
