@@ -9,14 +9,14 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class BOJ4256_트리 {
-    static int[] preOrder;
-    static int[] inOrder;
-    static int N;
+            static int[] preOrder;
+            static int[] inOrder;
+            static int N;
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            public static void main(String[] args) throws IOException {
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int T = Integer.parseInt(br.readLine());
+                int T = Integer.parseInt(br.readLine());
 
         for (int tc = 0; tc < T; tc++){
             N = Integer.parseInt(br.readLine());
