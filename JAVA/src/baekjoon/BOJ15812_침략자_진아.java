@@ -13,6 +13,9 @@ package baekjoon;
  *          두개를 뒀을 때 BFS를 돌려 모든 마을을 감염시키는 최소 시간을 정답에 초기화
  */
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class BOJ15812_침략자_진아 {
@@ -26,11 +29,11 @@ public class BOJ15812_침략자_진아 {
     static int[][] arr;
     static int target;
 
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-
-        N = input.nextInt();
-        M = input.nextInt();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
 
 
         ArrayList<int[]> directions = new ArrayList<>();
@@ -38,11 +41,10 @@ public class BOJ15812_침략자_진아 {
         arr = new int[N][M];
 
         for (int i = 0; i < N; i++) {
-            String tmp = input.next();
+            String tmp = br.readLine();
 
             for (int j = 0; j < M; j++) {
-
-                arr[i][j] = Integer.parseInt("" + tmp.charAt(j));
+                arr[i][j] = tmp.charAt(j) - '0';
 
                 // 0일 경우는 의미 없고 1일 경우 마을의 수 +1
                 target += arr[i][j];
