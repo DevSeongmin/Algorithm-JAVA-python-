@@ -3,235 +3,183 @@ package baekjoon;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class BOJ17825_주사위_윳놀이 {
 
-
-    static boolean[] alreadyLocated = new boolean[41];
-    static Horse[] horses;
-    static int[] dices;
     static int solve = 0;
 
+    // 말 4마리
+    static int[] horses = new int[4];
+
+    static int[] dices;
+
+    static int[] map = {
+      //지름길 없이 쭉   0 ~ 20       21 ~ 25 도착 인덱스
+      0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 0, 0, 0, 0, 0,
+
+      // 10 지름길 26 ~ 33     34~38   도착 인덱스
+      10, 13,16,19,25,30,35,40,0, 0, 0, 0, 0,
+
+      // 20 지름길 39 ~ 45    46 ~ 50
+      20, 22, 24, 25, 30, 35, 40, 0, 0, 0, 0, 0,
+
+      // 30 지름길 51 ~ 58      59 ~ 63
+      30, 28, 27, 26, 25, 30, 35,40, 0 ,0 ,0 ,0 ,0
+    };
+
+    static List<Integer> twentyFive = new ArrayList<>();
+    static List<Integer> thirty = new ArrayList<>();
+    static List<Integer> thirtyFive = new ArrayList<>();
+    static List<Integer> fourty = new ArrayList<>();
+
+
+    // 지름길 발판을 밟은 경우를 대비해
+    static HashMap<Integer, Integer> shortcut = new HashMap<>();
+
+    static boolean[] visited = new boolean[64];
+
     public static void main(String[] args) throws IOException {
+
+        // 25에 겹치는 부분들
+        twentyFive.add(30);
+        twentyFive.add(42);
+        twentyFive.add(55);
+
+        // 30에 겹치는 부분들
+        thirty.add(31);
+        thirty.add(43);
+        thirty.add(56);
+
+        //35에 겹치는 부분들
+        thirtyFive.add(32);
+        thirtyFive.add(44);
+        thirtyFive.add(57);
+
+        //40에 겹치는 부분들
+        fourty.add(20);
+        fourty.add(33);
+        fourty.add(45);
+        fourty.add(58);
+
+        // 지름길 맵
+        shortcut.put(5, 26);
+        shortcut.put(10, 39);
+        shortcut.put(15, 51);
+
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        horses = new Horse[4];
-
-        //Horse 형 배열에 말 객체 4개 추가
-        for (int i = 0; i < 4; i++) {
-            horses[i] = new Horse();
-        }
-
+        StringTokenizer input = new StringTokenizer(br.readLine());
 
         dices = new int[10];
-        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        // 10개의 턴 10개 입력 받음
-        for (int i = 0; i < 10; i++) {
-            dices[i] = Integer.parseInt(st.nextToken());
+        for (int i = 0; i < 10; i++){
+            dices[i] = Integer.parseInt(input.nextToken());
         }
 
+        // 초기 인덱스 0
+        Arrays.fill(horses, 0);
 
+        play(0, 0);
 
-        play(0,0);
         System.out.println(solve);
+
     }
 
-    // 주사위를 10변 굴리는 재귀함수 모든 경우 탐색
-    static void play(int depth, int answer) {
-        solve = Math.max(answer, solve);
 
-        if (depth == 10){
-            return;
-        }
 
 
-        // 배열의 i번째 말을 움직이는 경우
-        for (int i = 0; i < 4; i++) {
+    static void play(int depth, int answer){
 
+        solve = Math.max(solve, answer);
 
-            // 현재 이동 길의 좌표룰 넘지 않은 경우
-            if (horses[i].idx + dices[depth] < horses[i].move.length - 1) {
+        if (depth == 10) return;
 
-                horses[i].idx += dices[depth];
 
-                // 다음 좌표로 갈 수 있다면
-                if (!alreadyLocated[horses[i].getPosition()]) {
-                    alreadyLocated[horses[i].getPosition()] = true;
-                    play(depth + 1, answer + horses[i].position);
-                    alreadyLocated[horses[i].getPosition()] = false;
-                }
+        for (int i = 0; i < 4; i++){
+            // 이미 도착한 말이라면 건너뛴다.
+            if (horses[i] == -1) continue;
 
-                horses[i].idx -= dices[depth];
 
+            // 말의 원래 인덱스
+            int originHorseIdx = horses[i];
+            // 다음 인덱스
+            int nextPosition = shortcut.getOrDefault(horses[i] + dices[depth], horses[i] + dices[depth]);
 
+            // 이미 다음 인덱스에 말이 있다면 건너뛴다. 
+            if (visited[nextPosition]) continue;
 
+            // 말이 골인한 경우
+            if (map[nextPosition] == 0) {
+                visited[originHorseIdx] = false;
+                horses[i] = -1;
+                play(depth + 1, answer);
+                visited[originHorseIdx] = true;
+                horses[i] = originHorseIdx;
+            }
 
-                // 현재 이동 길의 좌표를 넘은 경우
-            } else if (horses[i].idx + dices[depth] > horses[i].move.length - 1) {
+            // 다음 좌표로 이동하는 경우     골인 못한 경우
+            else {
+                // 다음 좌표가 25 즉 인덱스를 공유하는 칸이라면
+                if (twentyFive.contains(nextPosition)){
+                    horses[i] = nextPosition;
+                    for (int f : twentyFive) visited[f] = true; // 해당 칸의 공유하는 모든 인덱스 true로
+                    visited[originHorseIdx] = false;
 
-                int originIdx = horses[i].idx;
-                int[] originLoad = horses[i].move;
+                    play(depth+1, answer + map[nextPosition]);
 
+                    horses[i] = originHorseIdx;
+                    for (int f : twentyFive) visited[f] = false;
+                    visited[originHorseIdx] = true;
 
-                if (horses[i].MoveLastValue() == 10) {
+                } else if (thirty.contains(nextPosition)){
+                    horses[i] = nextPosition;
+                    for (int f : thirty) visited[f] = true;
+                    visited[originHorseIdx] = false;
 
+                    play(depth+1, answer + map[nextPosition]);
 
+                    horses[i] = originHorseIdx;
+                    for (int f : thirty) visited[f] = false;
+                    visited[originHorseIdx] = true;
 
-                    horses[i].move = Horse._10To20;
-                    horses[i].idx = horses[i].idx + dices[depth] - horses[i].move.length;
+                } else if (thirtyFive.contains(nextPosition)){
+                    horses[i] = nextPosition;
+                    for (int f : thirtyFive) visited[f] = true;
+                    visited[originHorseIdx] = false;
 
-                    if (!alreadyLocated[horses[i].getPosition()]) {
-                        alreadyLocated[horses[i].getPosition()] = true;
-                        play(depth + 1, answer + horses[i].getPosition());
-                        alreadyLocated[horses[i].getPosition()] = false;
-                    }
+                    play(depth+1, answer + map[nextPosition]);
 
+                    horses[i] = originHorseIdx;
+                    for (int f : thirtyFive) visited[f] = false;
+                    visited[originHorseIdx] = true;
 
-                    horses[i].idx = originIdx;
-                    horses[i].move = originLoad;
+                } else if (fourty.contains(nextPosition)){
+                    horses[i] = nextPosition;
+                    for (int f : fourty) visited[f] = true;
+                    visited[originHorseIdx] = false;
 
+                    play(depth+1, answer + map[nextPosition]);
 
-                } else if (horses[i].MoveLastValue() == 20) {
-                    horses[i].move = Horse._20To30;
-                    horses[i].idx = horses[i].idx + dices[depth] - horses[i].move.length;
+                    horses[i] = originHorseIdx;
+                    for (int f : fourty) visited[f] = false;
+                    visited[originHorseIdx] = true;
 
-                    if (!alreadyLocated[horses[i].getPosition()]) {
+                } else {
 
-                        alreadyLocated[horses[i].getPosition()] = true;
-                        play(depth + 1, answer + horses[i].getPosition());
-                        alreadyLocated[horses[i].getPosition()] = false;
+                    // 25 30 35 40 이 아닌 일반 칸이라면
+                    horses[i] = nextPosition;
+                    visited[nextPosition] = true;
+                    visited[originHorseIdx] = false;
 
-                    }
-                    horses[i].idx = originIdx;
-                    horses[i].move = originLoad;
+                    play(depth + 1, answer + map[horses[i]]);
 
-
-                } else if (horses[i].MoveLastValue() == 30) {
-                    horses[i].move = Horse._30To40;
-                    horses[i].idx = horses[i].idx + dices[depth] - horses[i].move.length;
-
-                    if (!alreadyLocated[horses[i].getPosition()]) {
-
-                        alreadyLocated[horses[i].getPosition()] = true;
-                        play(depth + 1, answer + horses[i].getPosition());
-                        alreadyLocated[horses[i].getPosition()] = false;
-
-                    }
-                    horses[i].idx = originIdx;
-                    horses[i].move = originLoad;
-
-
-                } else if (horses[i].MoveLastValue() == 25) {
-                    horses[i].move = Horse._25To40;
-                    horses[i].idx = horses[i].idx + dices[depth] - horses[i].move.length;
-                    if (!alreadyLocated[horses[i].getPosition()]) {
-
-                        alreadyLocated[horses[i].getPosition()] = true;
-                        play(depth + 1, answer + horses[i].getPosition());
-                        alreadyLocated[horses[i].getPosition()] = false;
-
-                    }
-                    horses[i].idx = originIdx;
-                    horses[i].move = originLoad;
-
-
-                }
-
-
-                // 지름길 좌표에 온경우
-            } else if (horses[i].idx == horses[i].move.length - 1) {
-
-                int originIdx = horses[i].idx;
-                int[] originLoad = horses[i].move;
-
-                if (horses[i].MoveLastValue() == 10) {
-
-                    answer += horses[i].getPosition();
-                    horses[i].idx = 0;
-                    horses[i].move = Horse._10To25;
-
-                    if (!alreadyLocated[horses[i].getPosition()]) {
-                        alreadyLocated[horses[i].getPosition()] = true;
-                        play(depth + 1, answer + horses[i].getPosition());
-                        alreadyLocated[horses[i].getPosition()] = false;
-
-                    }
-
-
-                    answer -= horses[i].getPosition();
-                    horses[i].idx = originIdx;
-                    horses[i].move = originLoad;
-
-
-
-                } else if (horses[i].MoveLastValue() == 20) {
-
-                    answer += horses[i].getPosition();
-                    horses[i].idx = 0;
-                    horses[i].move = Horse._20To25;
-
-                    if (!alreadyLocated[horses[i].getPosition()]) {
-
-                        alreadyLocated[horses[i].getPosition()] = true;
-                        play(depth + 1, answer + horses[i].getPosition());
-                        alreadyLocated[horses[i].getPosition()] = false;
-
-                    }
-
-                    answer -= horses[i].getPosition();
-                    horses[i].idx = originIdx;
-                    horses[i].move = originLoad;
-
-
-
-
-                } else if (horses[i].MoveLastValue() == 30) {
-
-                    answer += horses[i].getPosition();
-                    horses[i].idx = 0;
-                    horses[i].move = Horse._30To25;
-
-                    if (!alreadyLocated[horses[i].getPosition()]) {
-
-                        alreadyLocated[horses[i].getPosition()] = true;
-                        play(depth + 1, answer + horses[i].getPosition());
-                        alreadyLocated[horses[i].getPosition()] = false;
-
-                    }
-
-                    answer -= horses[i].getPosition();
-                    horses[i].idx = originIdx;
-                    horses[i].move = originLoad;
-
+                    horses[i] = originHorseIdx;
+                    visited[nextPosition] = false;
+                    visited[originHorseIdx] = true;
                 }
             }
         }
     }
 }
 
-class Horse {
-
-    static int[] _0To10 = {0, 2, 4, 6, 8, 10};
-    static int[] _10To25 = {13, 16, 19, 25};
-    static int[] _10To20 = {12, 14, 15, 18, 20};
-    static int[] _20To25 = {22, 24, 25};
-    static int[] _20To30 = {22, 24, 26, 28, 30};
-    static int[] _30To25 = {28, 27, 26, 25};
-    static int[] _30To40 = {32, 34, 36, 38, 40};
-    static int[] _25To40 = {30, 35, 40};
-
-
-    int idx;
-    int position;
-    int[] move = _0To10;
-
-    public int getPosition() {
-        return this.move[idx];
-    }
-
-    public int MoveLastValue() {
-        return move[this.move.length - 1];
-    }
-}
