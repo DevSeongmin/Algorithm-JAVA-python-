@@ -9,7 +9,7 @@ public class BOJ1389_케빈베이컨의6단계법칙 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String[] input;
-        
+
         input = br.readLine().split(" ");
 
         int Node = Integer.parseInt(input[0]);
