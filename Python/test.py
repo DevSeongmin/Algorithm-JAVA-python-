@@ -1,31 +1,58 @@
-def move(coord, direction):
-    if direction == 'U':
-        return coord[0], coord[1] + 1
-    elif direction == 'D':
-        return coord[0], coord[1] - 1
-    elif direction == 'L':
-        return coord[0] - 1, coord[1]
-    elif direction == 'R':
-        return coord[0] + 1, coord[1]
 
-N, K = map(int, input().split())
-S = input().strip()
+x_move = [-1, 1, 0, 0, -1, 1, -1, 1]
+y_move = [0, 0, -1, 1, -1, 1, 1, -1]
+def dfs(x,y):
 
-L = N * K
-cycle_length = L % N
+    if not visited[y][x]:
+        visited[y][x] = True
 
-# 주기의 길이만큼 문자열을 잘라서 새로운 문자열 P를 만듦
-P = S[:cycle_length]
+        for i in range(8):
+            nx = x_move[i] + x
+            ny = y_move[i] + y
 
-# P를 2번 이어 붙여 새로운 문자열 T를 만듦
-T = P * 2
+            if 0 <= nx < n and 0 <= ny < n:
+                if arr[ny][nx] == 0:
+                    dfs(nx, ny)
+                else:
+                    visited[ny][nx] = True
 
-current_coord = (0, 0)
 
-for direction in T:
-    current_coord = move(current_coord, direction)
 
-if current_coord == (0, 0):
-    print("YES")
-else:
-    print("NO")
+
+
+T = int(input())
+
+for tc in range(1,T+1):
+
+    n = int(input())
+
+    arr = [list(input()) for _ in range(n)]
+    arr = [[0 if j == '.' else j for j in i] for i in arr]
+    visited = [[True if j =='*' else False for j in i] for i in arr]
+
+
+    for y in range(n):
+        for x in range(n):
+            if arr[y][x] =='*':
+                for i in range(8):
+                    nx = x + x_move[i]
+                    ny = y + y_move[i]
+                    if 0 <= nx < n and 0 <= ny < n:
+                        if arr[ny][nx] != '*':
+                            arr[ny][nx] += 1
+
+    zero_index = []
+    for y in range(n):
+        for x in range(n):
+            if arr[y][x] == 0:
+                zero_index.append([x, y])
+
+
+    cnt = 0
+    for x, y in zero_index:
+        if not visited[y][x]:
+            cnt += 1
+            dfs(x,y)
+
+    print(f'#{tc} {sum(map(lambda x: n - sum(x), visited)) + cnt}')
+    print(arr)

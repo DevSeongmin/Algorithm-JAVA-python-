@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Swea_1873_상호의배틀필드 {
+public class Swea1873_상호의배틀필드 {
 
     static int Y, X;
     static Character[][] map;
