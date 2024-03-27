@@ -11,6 +11,7 @@ public class BOJ10162_전자레인지 {
         int N = Integer.parseInt(br.readLine());
 
         int A = N / 300;
+
         N %= 300;
         int B = N / 60;
         N %= 60;
