@@ -6,57 +6,53 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class BOJ2263_트리의_순회 {
-
-    static int[] inOrder;
-    static int[] postOrder;
-    static int N;
+    static int[] inOrder, postOrder;
 
     public static void main(String[] args) throws IOException {
-
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        N = Integer.parseInt(br.readLine());
-
-        int[][] tree = new int[N + 1][2];
+        int N = Integer.parseInt(br.readLine());
 
         inOrder = new int[N];
         postOrder = new int[N];
-        boolean[] visited = new boolean[N];
 
-        StringTokenizer st1 = new StringTokenizer(br.readLine());
-        StringTokenizer st2 = new StringTokenizer(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
         for (int i = 0; i < N; i++) {
-            inOrder[i] = Integer.parseInt(st1.nextToken());
-            postOrder[i] = Integer.parseInt(st2.nextToken());
-
+            inOrder[i] = Integer.parseInt(st.nextToken());
         }
 
-        recursion(N-1,0,N);
+        st = new StringTokenizer(br.readLine());
+
+        for (int i = 0; i < N; i++) {
+            postOrder[i] = Integer.parseInt(st.nextToken());
+        }
+
+
+        search(0, N, 0, N);
     }
 
+    static void search(int is, int ie, int ps, int pe) {
+        if (is >= ie || ps >= pe) return;
 
-    static void recursion(int root, int s, int e){
-        for (int idx = s; idx < e; idx++){
+        int root = postOrder[pe - 1];
+        int idx = -1;
 
-            if (postOrder[root] == inOrder[idx]){
-
-
-                //root
-                System.out.println(postOrder[root]);
-
-
-                //left
-                recursion(root - (e -1), s,idx);
-
-
-                //right
-                recursion(root-1,idx + 1,e);
-
-
-
+        for (int i = is; i < ie; i++) {
+            if (inOrder[i] == root) {
+                idx = i;
+                break;
             }
         }
 
+        int leftSize = idx - is;
+
+        System.out.print(root + " ");
+
+        // 왼쪽 서브트리
+        search(is, idx, ps, ps + leftSize);
+
+        // 오른쪽 서브트리
+        search(idx + 1, ie, ps + leftSize, pe - 1);
     }
 }
