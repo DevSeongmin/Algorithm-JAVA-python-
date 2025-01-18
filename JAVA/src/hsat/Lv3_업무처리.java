@@ -11,7 +11,7 @@ class Node {
 	Queue<Integer> completeQ = new  LinkedList();
 }
 
-public class HsatLv3_업무처리 {
+public class Lv3_업무처리 {
 
 	static int tailStart;
 	static int tailEnd;
