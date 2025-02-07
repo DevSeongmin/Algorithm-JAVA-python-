@@ -13,8 +13,6 @@ public class _3442_Maximum_Difference_Between_Even_and_Odd_Frequency_I {
 				map.put(c, map.getOrDefault(c, 0) + 1);
 			}
 
-			System.out.println(map);
-
 			int odd = 0;
 			int even = Integer.MAX_VALUE;
 
