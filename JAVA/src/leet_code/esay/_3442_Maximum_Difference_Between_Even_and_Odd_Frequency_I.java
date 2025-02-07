@@ -2,7 +2,7 @@ package leet_code.esay;
 
 import java.util.HashMap;
 
-public class _3443_Maximum_Difference_Between_Even_and_Odd_Frequency_I {
+public class _3442_Maximum_Difference_Between_Even_and_Odd_Frequency_I {
 	class Solution {
 		public int maxDifference(String s) {
 
