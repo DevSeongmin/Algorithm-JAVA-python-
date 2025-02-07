@@ -2,7 +2,7 @@ package leet_code.medium;
 
 import java.util.HashMap;
 
-public class Maximum_Manhattan_Distance_After_K_Changes {
+public class _3443_Maximum_Manhattan_Distance_After_K_Changes {
 	class Solution {
 		static HashMap<Character, int[]> map = new HashMap();
 		static{
