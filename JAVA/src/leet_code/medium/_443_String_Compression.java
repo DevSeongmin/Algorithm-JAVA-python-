@@ -17,7 +17,7 @@ public class _443_String_Compression {
 
 				answer.append(curC);
 				if (cnt > 1) {
-					answer.append(""+cnt);
+					answer.append(cnt);
 				}
 
 				curC = c;
@@ -26,7 +26,7 @@ public class _443_String_Compression {
 
 			answer.append(curC);
 			if (cnt > 1) {
-				answer.append(""+cnt);
+				answer.append(cnt);
 			}
 
 			for (int i = 0; i < answer.length(); i++) {
