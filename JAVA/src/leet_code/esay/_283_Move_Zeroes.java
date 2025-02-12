@@ -6,7 +6,6 @@ public class _283_Move_Zeroes {
 			int[] answer = new int[nums.length];
 
 			int idx = 0;
-			int zCnt = 0;
 
 			for (int num : nums){
 				if (num != 0){
