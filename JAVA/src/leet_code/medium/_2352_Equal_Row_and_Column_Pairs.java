@@ -11,21 +11,23 @@ public class _2352_Equal_Row_and_Column_Pairs {
 			HashMap<String, Integer> xMap = new HashMap();
 
 			for (int i = 0; i < Y; i++) {
-				String key = "";
+				StringBuilder key = new StringBuilder();
 				for (int j = 0; j < X; j++) {
-					key += grid[i][j] + " ";
+					key.append(grid[i][j]);
+					key.append(" ");
 				}
-				xMap.put(key, xMap.getOrDefault(key, 0) + 1);
+				xMap.put(key.toString(), xMap.getOrDefault(key.toString(), 0) + 1);
 			}
 
 			int answer = 0;
 
 			for (int i = 0; i < Y; i++) {
-				String key = "";
+				StringBuilder key = new StringBuilder();
 				for (int j = 0; j < X; j++) {
-					key += grid[j][i] + " ";
+					key.append(grid[j][i]);
+					key.append(" ");
 				}
-				answer += xMap.getOrDefault(key, 0);
+				answer += xMap.getOrDefault(key.toString(), 0);
 			}
 			return answer;
 		}
