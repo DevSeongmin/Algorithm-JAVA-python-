@@ -1,5 +1,7 @@
 package leet_code.medium;
 
+import leet_code.common.TreeNode;
+
 public class _236_Lowest_Common_Ancestor_of_a_Binary_Tree {
 	class Solution {
 		static TreeNode answer;

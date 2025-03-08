@@ -1,10 +1,10 @@
-package leet_code.medium;
+package leet_code.common;
 
 public class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-    TreeNode() {}
+    public int val;
+    public TreeNode left;
+    public TreeNode right;
+    protected TreeNode() {}
     TreeNode(int val) { this.val = val; }
     TreeNode(int val, TreeNode left, TreeNode right) {
         this.val = val;

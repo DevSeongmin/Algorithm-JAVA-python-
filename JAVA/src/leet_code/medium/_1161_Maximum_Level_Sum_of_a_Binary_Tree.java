@@ -2,6 +2,8 @@ package leet_code.medium;
 
 import java.util.HashMap;
 
+import leet_code.common.TreeNode;
+
 public class _1161_Maximum_Level_Sum_of_a_Binary_Tree {
 	class Solution {
 		static HashMap<Integer, Integer> map;

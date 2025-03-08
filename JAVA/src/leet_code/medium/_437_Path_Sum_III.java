@@ -1,5 +1,7 @@
 package leet_code.medium;
 
+import leet_code.common.TreeNode;
+
 public class _437_Path_Sum_III {
 	class Solution {
 		public int pathSum(TreeNode root, int targetSum) {

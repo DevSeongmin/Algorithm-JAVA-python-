@@ -1,5 +1,7 @@
 package leet_code.medium;
 
+import leet_code.common.TreeNode;
+
 public class _450_Delete_Node_in_a_BST {
 	class Solution {
 		public TreeNode deleteNode(TreeNode root, int key) {

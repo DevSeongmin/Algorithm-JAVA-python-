@@ -1,5 +1,7 @@
 package leet_code.medium;
 
+import leet_code.common.TreeNode;
+
 public class _1448_Count_Good_Nodes_in_Binary_Tree {
 	class Solution {
 		int good;

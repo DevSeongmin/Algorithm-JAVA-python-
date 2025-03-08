@@ -1,5 +1,7 @@
 package leet_code.medium;
 
+import leet_code.common.TreeNode;
+
 public class _1372_Longest_ZigZag_Path_in_a_Binary_Tree {
 	class Solution {
 		int maxStep = 0;
