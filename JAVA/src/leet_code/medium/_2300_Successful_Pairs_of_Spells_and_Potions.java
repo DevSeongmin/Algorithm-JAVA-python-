@@ -1,8 +1,8 @@
-package leet_code.medium._2300;
+package leet_code.medium;
 
 import java.util.Arrays;
 
-public class _Successful_Pairs_of_Spells_and_Potions {
+public class _2300_Successful_Pairs_of_Spells_and_Potions {
 	class Solution {
 		public int[] successfulPairs(int[] spells, int[] potions, long success) {
 			Arrays.sort(potions);
