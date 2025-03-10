@@ -25,7 +25,6 @@ public class _Successful_Pairs_of_Spells_and_Potions {
 						left = mid + 1;
 					}
 				}
-				System.out.println(left);
 				answer[i] = potions.length - left;
 			}
 
