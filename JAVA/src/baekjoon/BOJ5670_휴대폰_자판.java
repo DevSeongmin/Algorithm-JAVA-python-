@@ -12,7 +12,6 @@ public class BOJ5670_휴대폰_자판 {
 
 		while ((line = br.readLine()) != null) {
 			try {
-
 				int n = Integer.parseInt(line);
 				String[] inputs = new String[n];
 
@@ -56,7 +55,6 @@ public class BOJ5670_휴대폰_자판 {
 			} catch (Exception e) {
 
 			}
-
 		}
 	}
 
