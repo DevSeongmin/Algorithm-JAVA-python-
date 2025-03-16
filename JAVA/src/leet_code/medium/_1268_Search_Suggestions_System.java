@@ -13,7 +13,7 @@ public class _1268_Search_Suggestions_System {
 				trie.insert(product);
 			}
 
-			List<List<String>> answer = new ArrayList();
+			List<List<String>> answer = new ArrayList<>();
 
 			StringBuilder sb = new StringBuilder();
 			TrieNode pointer = trie.root;
@@ -30,14 +30,14 @@ public class _1268_Search_Suggestions_System {
 				pointer = pointer.child[c - 'a'];
 				List<String> list = new ArrayList<>();
 				dfs(pointer, sb, list);
-				answer.add(new ArrayList(list));
+				answer.add(new ArrayList<>(list));
 
 			}
 
 
 			return answer;
 		}
-		static void dfs(TrieNode pointer, StringBuilder sb, List list) {
+		static void dfs(TrieNode pointer, StringBuilder sb, List<String> list) {
 			if (list.size() >= 3) return;
 
 			if (pointer.isEnd) {
