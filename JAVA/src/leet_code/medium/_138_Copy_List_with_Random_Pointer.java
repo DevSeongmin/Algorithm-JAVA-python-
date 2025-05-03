@@ -56,10 +56,6 @@ public class _138_Copy_List_with_Random_Pointer {
 	}
 
 
-
-
-
-
 	class OptimizedSolution {
 		public Node copyRandomList(Node head) {
 
