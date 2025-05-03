@@ -1,10 +1,10 @@
-package leet_code.medium._138;
+package leet_code.medium;
 
 import java.util.HashMap;
 
 import leet_code.common.Node;
 
-public class _Copy_List_with_Random_Pointer {
+public class _138_Copy_List_with_Random_Pointer {
 
 	class MySolution {
 		public Node copyRandomList(Node head) {
