@@ -2,6 +2,7 @@ package leet_code.common;
 
 public class Node {
 	public int y, x, cnt, val;
+	public Node left, right;
 	public Node next;
 	public Node random;
 
