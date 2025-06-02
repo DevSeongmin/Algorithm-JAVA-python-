@@ -6,8 +6,6 @@ import java.util.List;
 public class _22_Generate_Parentheses {
 	class Solution {
 		public List<String> generateParenthesis(int n) {
-			char[] a = new char[n*2];
-
 			List<String> answer = new LinkedList<>();
 
 			match(new StringBuilder(), n, n, 0, answer);
