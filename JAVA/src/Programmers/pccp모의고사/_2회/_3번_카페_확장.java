@@ -32,7 +32,7 @@ public class _3번_카페_확장 {
 	}
 
 	class Event{
-		int enter;  //enter : 1, exit : -1
+		int enter;  //enter: 1, exit: -1
 		int time;
 
 		public Event(int enter, int time) {
