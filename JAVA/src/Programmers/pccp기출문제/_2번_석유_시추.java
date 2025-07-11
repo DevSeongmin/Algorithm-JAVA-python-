@@ -66,7 +66,6 @@ public class _2번_석유_시추 {
 			for (int i = leftX; i <= rightX; i++) {
 				gases[i] += cnt;
 			}
-
 		}
 
 		static boolean isIn(int y, int x) {
